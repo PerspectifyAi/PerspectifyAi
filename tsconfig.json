@@ -14,9 +14,9 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["*"]
     },
     "plugins": [
       {
@@ -30,11 +30,7 @@
     "**/*.tsx",
     "**/*.js",
     "**/*.jsx",
-    ".next/types/**/*.ts",
-    "src/actions/dashboard.ts",
-    "src/lib/inngest/function.jsx",
-    "src/app/(main)/account/[id]/page.tsx",
-    "actions/transaction.ts"
+    ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }
