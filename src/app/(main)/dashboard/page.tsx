@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { getUserAccounts, getDashboardData } from "actions/dashboard";
-import { getCurrentBudget } from "actions/budget";
+import { getUserAccounts, getDashboardData }  from "@/actions/dashboard";
+import { getCurrentBudget } from "@/actions/budget";
 
 import { AccountCard } from "./_components/account-card";
 import { CreateAccountDrawer } from "@/components/create-account-drawer";

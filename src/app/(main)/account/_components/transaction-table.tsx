@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import { Trash2, ArrowUpDown } from "lucide-react";
 import { SerializedTransaction } from "@/types";
-import { bulkDeleteTransactions } from "actions/account";
+import { bulkDeleteTransactions } from "@/actions/account";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";

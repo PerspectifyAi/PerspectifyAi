@@ -1,6 +1,7 @@
 import { inngest } from "./client";
 import { db } from "@/lib/prisma";
-import EmailTemplate from "@/emails/template";
+import EmailTemplate from '../../../emails/template'; // adjust the path correctly
+
 import { sendEmail } from "@/actions/send-email";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 

@@ -7,7 +7,7 @@ import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 import useFetch from "../../hooks/use-fetch";
-import { createAccount } from "../../actions/dashboard";
+import { createAccount } from "@/actions/dashboard";
 import { accountSchema } from "@/app/lib/schema";
 
 import { Button } from "@/components/ui/button";

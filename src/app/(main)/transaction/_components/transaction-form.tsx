@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { createTransaction } from "actions/transaction";
+import { createTransaction } from "@/actions/transaction";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";

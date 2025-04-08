@@ -1,6 +1,4 @@
-// src/app/(main)/account/[id]/page.tsx
-
-import { getAccountWithTransactions } from "actions/account";
+import { getAccountWithTransactions } from "@/actions/account";
 import { TransactionTable } from "../_components/transaction-table";
 import { notFound } from "next/navigation";
 import { AccountChart } from "../_components/account-chart";
