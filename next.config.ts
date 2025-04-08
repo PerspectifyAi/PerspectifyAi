@@ -1,16 +1,17 @@
 import path from 'path';
-import { fileURLToPath } from 'url';
+import type { NextConfig } from 'next';
+import type { Configuration as WebpackConfig } from 'webpack';
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   images: {
     domains: ['randomuser.me'],
   },
-  webpack: (config: { resolve: { alias: { [x: string]: string; }; }; }) => {
-    config.resolve.alias['@'] = path.resolve(
-      path.dirname(fileURLToPath(import.meta.url)),
-      'src'
-    );
+  webpack: (config: WebpackConfig) => {
+    config.resolve = config.resolve || {};
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
+      '@': path.resolve(__dirname, 'src'),
+    };
     return config;
   },
 };

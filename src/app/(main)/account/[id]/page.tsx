@@ -1,13 +1,16 @@
 import { getAccountWithTransactions } from "@/actions/account";
-import { TransactionTable } from "../_components/transaction-table";
 import { notFound } from "next/navigation";
+import { TransactionTable } from "../_components/transaction-table";
 import { AccountChart } from "../_components/account-chart";
+import React from "react";
 
-interface AccountPageProps {
-  params: { id: string };
-}
+type PageProps = {
+  params: {
+    id: string;
+  };
+};
 
-export default async function AccountPage({ params }: AccountPageProps) {
+export default async function Page({ params }: PageProps) {
   const accountData = await getAccountWithTransactions(params.id);
 
   if (!accountData) {
@@ -37,7 +40,8 @@ export default async function AccountPage({ params }: AccountPageProps) {
             })}
           </div>
           <p className="text-sm text-muted-foreground">
-            {account._count.transactions} {account._count.transactions === 1 ? "Transaction" : "Transactions"}
+            {account._count.transactions}{" "}
+            {account._count.transactions === 1 ? "Transaction" : "Transactions"}
           </p>
         </div>
       </div>

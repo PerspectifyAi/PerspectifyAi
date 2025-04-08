@@ -11,7 +11,7 @@ import Link from "next/link";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 
-import { updateDefaultAccount } from "../../../../../actions/account";
+import { updateDefaultAccount } from "@/actions/account";
 import useFetch from "hooks/use-fetch";
 
 import {
