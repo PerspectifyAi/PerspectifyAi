@@ -1,0 +1,16 @@
+/* hero-animation.css */
+
+@keyframes gradient-pan {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background: linear-gradient(135deg, #1e3a8a, #6b21a8, #7c3aed);
+  background-size: 200% 200%;
+  animation: gradient-pan 10s ease infinite;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
