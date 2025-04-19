@@ -73,7 +73,7 @@ export default function CommunityContribution() {
               className="w-full sm:w-auto border-purple-500 text-purple-400 hover:bg-purple-600 hover:text-white hover:border-purple-600 transition-all flex items-center justify-center gap-2 group"
             >
               <Bell size={18} className="group-hover:animate-pulse" />
-              Get Updates
+              Join telegram
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>

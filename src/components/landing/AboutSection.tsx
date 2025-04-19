@@ -95,7 +95,7 @@ const AboutSection: React.FC = () => {
             <ul className="text-gray-300 space-y-3">
               <li>
                 <span className="text-purple-400 text-lg font-bold">
-                  <CountUp end={100000} duration={3} separator="," />+
+                  <CountUp end={400} duration={3} separator="," />+
                 </span>{" "}
                 Users Helped
               </li>
@@ -107,7 +107,7 @@ const AboutSection: React.FC = () => {
               </li>
               <li>
                 <span className="text-purple-400 text-lg font-bold">
-                  <CountUp end={50} duration={2} />
+                  <CountUp end={2} duration={2} />
                 </span>{" "}
                 Countries
               </li>

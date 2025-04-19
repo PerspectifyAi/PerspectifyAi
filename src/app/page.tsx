@@ -22,7 +22,7 @@ export default function Home() {
       <Header />
 
       {/* Spacer to avoid content being hidden behind fixed header */}
-      <div className="-mt-13" />
+      <div className="-mt-8" />
 
       {/* LandingPage component which contains your page content */}
       <LandingPage />

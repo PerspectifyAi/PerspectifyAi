@@ -9,7 +9,7 @@ import Footer from '@/components/Footer'
 import PartnershipSection from './landing/PartnershipSection'
 import FAQAndContactSection from './landing/faq-and-contact'
 import TeamSection from './landing/TeamSection'
-import WaitlistBanner from './landing/WaitlistBanner' // ✅ Import Waitlist Banner
+import WaitlistBanner from './landing/WaitlistBanner'
 import CommunityContribution from './landing/CommunityContribution'
 
 const LandingPage: React.FC = () => {
@@ -52,6 +52,7 @@ const LandingPage: React.FC = () => {
 
       {/* CommunityContribution seaction */}
       <CommunityContribution/>
+
 
       {/* Testimonials */}
       <TestimonialsSection />

@@ -50,7 +50,7 @@ export default function MissionPage() {
             </h2>
             <p className="mt-4 text-gray-300 max-w-2xl mx-auto">
               <span className="text-purple-300 font-semibold">Early Proof. Growing Momentum.</span> <br />
-              We’ve already tested the platform with over 350 users, received powerful feedback, and supported our first charity initiative serving 12 underrepresented individuals. <br />
+              We’ve already tested the platform with over 410 users, received powerful feedback, and supported our first charity initiative serving 12 underrepresented individuals. <br />
               This is just the beginning — but it’s already creating ripples. <br />
               We’re not broadcasting numbers. <br />
               We’re building momentum.

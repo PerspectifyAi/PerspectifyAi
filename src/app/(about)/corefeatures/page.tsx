@@ -1,85 +1,72 @@
 'use client';
 
 import React from 'react';
-import {
-  CheckCircle,
-  Brain,
-  PieChart,
-  BookOpen,
-  Sparkles,
-  Coins,
-  Users,
-} from 'lucide-react';
 
-const features = [
-  {
-    icon: <CheckCircle className="h-6 w-6 text-purple-400" />,
-    title: '🎯 Goal-Driven Financial Habits',
-    description:
-      'Create real goals. Build habits that stick. Track your transformation.',
-  },
-  {
-    icon: <Brain className="h-6 w-6 text-purple-400" />,
-    title: '🧠 AI Guidance That Adapts',
-    description:
-      'Your personal assistant for money, mindset, and mastery — always evolving with you.',
-  },
-  {
-    icon: <PieChart className="h-6 w-6 text-purple-400" />,
-    title: '📊 Real-Time Budget & Expense Tracking',
-    description: 'Stay sharp. Stay clear. No confusion, just clarity.',
-  },
-  {
-    icon: <BookOpen className="h-6 w-6 text-purple-400" />,
-    title: '📚 Interactive Lessons + Quizzes (Coming Soon)',
-    description:
-      'Learn what school never taught you. Designed for how you live and grow.',
-  },
-  {
-    icon: <Sparkles className="h-6 w-6 text-purple-400" />,
-    title: '💡 Self-Reflection + Weekly Check-ins',
-    description:
-      'It’s not just what you spend — it’s how you think. Get insights that move you forward.',
-  },
-  {
-    icon: <Coins className="h-6 w-6 text-purple-400" />,
-    title: '🪙 Token-Enabled Growth (Coming Soon)',
-    description:
-      'Engage, learn, grow — and earn. Our reward system is designed to give back to those who build forward.',
-  },
-  {
-    icon: <Users className="h-6 w-6 text-purple-400" />,
-    title: '🌐 PerspectiveLive Community Hub',
-    description:
-      'Not just a feature. A movement. Rise through challenges. Earn your Catalyst Score. PerspectiveLive is where growth becomes legacy — and community becomes currency.',
-  },
-];
-
-export default function CoreFeaturesPage() {
+export default function CoreValuesSection() {
   return (
     <section className="min-h-screen bg-[#0f0f0f] text-white px-6 py-20">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 via-white to-purple-600 bg-clip-text text-transparent">
-            Your Growth. Gamified. Guided. Grounded.
-          </h1>
+      <div className="max-w-5xl mx-auto">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 bg-gradient-to-r from-purple-400 via-white to-purple-600 bg-clip-text text-transparent">
+          At Perspectify, It’s Bigger Than Code
+        </h2>
+
+        <p className="text-lg text-gray-300 text-center mb-10">
+          Everything we build is guided by values that go beyond code, content, or tools. These values are the foundation of our culture, our product, and our movement:
+        </p>
+
+        <div className="space-y-6 text-gray-200">
+          <div>
+            <h3 className="text-xl font-semibold text-purple-400">📚 Education</h3>
+            <p>
+              We believe knowledge is the gateway to freedom. Our systems are designed to teach, challenge, and transform — not just inform.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-semibold text-purple-400">💪 Empowerment</h3>
+            <p>
+              We’re not here to give handouts. We’re here to help people build systems that give them control over their future.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-semibold text-purple-400">🧱 Integrity</h3>
+            <p>
+              We don’t do gimmicks. What we offer is real, grounded, and built with honesty at every layer.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-semibold text-purple-400">🚀 Innovation</h3>
+            <p>
+              We use AI, automation, and gamification not to impress — but to improve lives in ways that actually matter.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-semibold text-purple-400">🌐 Community</h3>
+            <p>
+              We move together. Growth happens faster when it’s shared. That’s why our tribe is the heartbeat of the platform.
+            </p>
+          </div>
         </div>
 
-        <div className="grid gap-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="bg-gradient-to-br from-purple-900 to-purple-700 p-6 rounded-2xl shadow-lg hover:shadow-purple-400/60 transform hover:scale-105 transition-all duration-300"
-            >
-              <div className="mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold mb-2 text-white">
-                {feature.title}
-              </h3>
-              <p className="text-gray-300 leading-relaxed">
-                {feature.description}
-              </p>
-            </div>
-          ))}
+        <div className="mt-16 border-t border-purple-700 pt-10 text-center">
+          <h3 className="text-2xl font-semibold text-purple-300 mb-4">🌍 Our Impact (So Far)</h3>
+          <p className="text-gray-300">
+            <strong>410 lives reached</strong> — Real people who’ve tested and benefitted from the early version of Perspectify.
+          </p>
+          <p className="text-gray-300 mt-2">
+            <strong>2 countries touched</strong> — Our movement has already crossed borders — and this is just the beginning.
+          </p>
+        </div>
+
+        <div className="mt-12 text-center">
+          <h3 className="text-2xl font-semibold text-purple-300 mb-2">🌟 The Vision</h3>
+          <p className="text-gray-300 text-lg">
+            <strong>40 million lives. 195 countries.</strong> <br />
+            This is bigger than an app. It’s a global blueprint for transformation.
+          </p>
         </div>
       </div>
     </section>

@@ -111,7 +111,7 @@ export default function WaitlistPage() {
   const spotsLeft = 500 - leaderboard.length;
 
   return (
-    <div className="min-h-screen bg-black text-white px-4 py-6">
+    <div className="min-h-screen bg-black text-white px-4 py-6 mt-10">
       {/* Header */}
       <div className="text-center mb-6">
         <h1 className="text-4xl font-bold text-purple-400">🚀 Join the Waitlist</h1>

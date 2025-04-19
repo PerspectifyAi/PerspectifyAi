@@ -29,7 +29,7 @@ const Header: React.FC = () => {
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-black via-[#1c0032] to-black/90 backdrop-blur-md border-b border-purple-800 shadow-md">
-      <nav className="container mx-auto px-4 md:px-6 py-2 flex items-center justify-between">
+      <nav className="container mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center">
           <Image
@@ -37,7 +37,7 @@ const Header: React.FC = () => {
             alt="PerspectifyAI Logo"
             width={130}
             height={40}
-            className="h-9 w-auto object-contain"
+            className="h-10 w-auto object-contain"
           />
         </Link>
 
