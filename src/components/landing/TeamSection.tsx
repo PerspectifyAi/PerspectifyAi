@@ -11,7 +11,7 @@ const team = [
   },
   {
     name: 'Isaiah',
-    role: 'Co-Founder | Operations & Community Growth',
+    role: 'Co-Founder | Operations &  | Community Growth',
     image: '/founders/founder2.png',
   },
   {

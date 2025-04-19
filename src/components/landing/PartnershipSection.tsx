@@ -8,11 +8,6 @@ import Image from 'next/image';
 
 const confirmedPartners = [
   {
-    name: 'Migrant Leaders',
-    label: 'Charity Partner',
-    link: 'https://www.migrantleaders.org.uk',
-  },
-  {
     name: 'Bizichat.AI',
     label: 'Technology Partner',
     link: 'https://www.bizichat.dev',
