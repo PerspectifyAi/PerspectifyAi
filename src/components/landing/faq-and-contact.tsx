@@ -56,7 +56,7 @@ export default function FAQAndContactSection() {
     const email = form.get('email');
     const message = form.get('message');
 
-    const res = await fetch('https://sheetdb.io/api/v1/angnxf0zh3xas', {
+    const res = await fetch('https://sheetdb.io/api/v1/2xfjvneast24k', {
       method: 'POST',
       body: JSON.stringify({ data: [{ name, email, message }] }),
       headers: {

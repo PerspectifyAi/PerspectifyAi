@@ -36,12 +36,12 @@ const team = [
   },
   {
     name: 'Piyush Oram',
-    role: 'Team Member — [Role to Confirm]',
+    role: 'Core Team',
     image: '/Teams/Piyush.jpg',
   },
   {
     name: 'Nithiesh Naik',
-    role: 'Team Member — [Role to Confirm]',
+    role: 'Core Team',
     image: '/Teams/Nithiesh.jpg',
   },
 ];

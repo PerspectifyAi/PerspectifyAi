@@ -10,24 +10,53 @@ import * as z from 'zod';
 import { Mail, User, PenLine } from 'lucide-react';
 import { motion } from 'framer-motion';
 
+// Define the Zod schema for form validation
 const formSchema = z.object({
   name: z.string().min(2, 'Name is too short'),
   email: z.string().email('Invalid email'),
   message: z.string().min(10, 'Message should be at least 10 characters'),
 });
 
+// Infer the TypeScript type from the Zod schema
+type PartnerFormData = z.infer<typeof formSchema>;
+
 export default function PartnerPage() {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm({
+    reset,
+  } = useForm<PartnerFormData>({
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit = async (data: unknown) => {
-    console.log('Form submitted:', data);
-    alert('Thank you for reaching out!');
+  // Submit handler sending data to SheetDB
+  const onSubmit = async (data: PartnerFormData) => {
+    try {
+      const response = await fetch('https://sheetdb.io/api/v1/tv4zh5b7wzxj7', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          data: {
+            name: data.name,
+            email: data.email,
+            message: data.message,
+          },
+        }),
+      });
+
+      if (response.ok) {
+        alert('Thank you for reaching out!');
+        reset();
+      } else {
+        alert('Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('There was an error submitting the form.');
+    }
   };
 
   return (

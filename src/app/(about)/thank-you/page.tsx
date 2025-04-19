@@ -135,7 +135,7 @@ export default function ThankYouPage() {
           Get sneak peeks, updates, and exclusive content. Join us on Telegram.
         </p>
         <a
-          href="https://t.me/perspectifyai"
+          href="https://t.me/perspectifybot?start=1727792237265"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition"

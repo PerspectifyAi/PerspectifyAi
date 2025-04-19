@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { WelcomeEmail } from "@/emails/welcome-email";
 
-// Ensure your API key is present
 const apiKey = process.env.RESEND_API_KEY;
 if (!apiKey) {
   console.error("[send-email] ❌ RESEND_API_KEY is not set in your environment");
@@ -27,7 +26,7 @@ export async function POST(req: Request) {
 
     // Send the email
     const result = await resend.emails.send({
-      from: "PerspectifyAI <team@perspectifyai.com>", // make sure this is a verified sender
+      from: "PerspectifyAI <community@perspectifyai.com>",
       to: email,
       subject: "Welcome to PerspectifyAI 🎉",
       react: WelcomeEmail({ userName }),

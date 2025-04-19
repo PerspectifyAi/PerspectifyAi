@@ -247,7 +247,7 @@ export default function WaitlistPage() {
       <div className="text-center mt-10">
         <p className="mb-3 text-lg font-semibold">🔥 Join our community!</p>
         <a
-          href="https://t.me/perspectifyai"
+          href="https://t.me/perspectifybot?start=1727792237265"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition cursor-pointer"

@@ -69,7 +69,7 @@ export default function CommunityContribution() {
 
             <Button
               variant="outline"
-              onClick={() => router.push('#future')}
+              onClick={() => router.push('https://t.me/perspectifybot?start=1727792237265')}
               className="w-full sm:w-auto border-purple-500 text-purple-400 hover:bg-purple-600 hover:text-white hover:border-purple-600 transition-all flex items-center justify-center gap-2 group"
             >
               <Bell size={18} className="group-hover:animate-pulse" />

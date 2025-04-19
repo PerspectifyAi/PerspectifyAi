@@ -63,8 +63,7 @@ export default function Footer() {
         <div>
           <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
           <ul className="space-y-2 text-sm text-gray-300">
-            <li>📍 123 Innovation Street</li>
-            <li>📞 1-800-PERSPECTIFY</li>
+            
             <li>📧 Support@perspectifyai.com</li>
           </ul>
         </div>

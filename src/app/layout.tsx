@@ -1,20 +1,19 @@
-// src/app/layout.tsx (Server Component)
-import { Inter } from "next/font/google";
-import type { Metadata } from "next";
-import "./globals.css";
-import Header from "../components/header";
-import ThemeToggleButton from "../components/ui/theme-toggle-button";
-import { ClerkProvider } from "@clerk/nextjs";
-import { Toaster } from "sonner";
-import HydrationFix from "@/components/HydrationFix";
-import ClientWrapper from "./ClientWrapper";
-import ReferralSync from "@/components/ReferralSync";
+import { Inter } from 'next/font/google';
+import type { Metadata } from 'next';
+import './globals.css';
+import Header from '../components/header';
+import ThemeToggleButton from '../components/ui/theme-toggle-button';
+import { ClerkProvider } from '@clerk/nextjs';
+import { Toaster } from 'sonner';
+import HydrationFix from '@/components/HydrationFix';
+import ClientWrapper from './ClientWrapper';
+import ReferralSync from '@/components/ReferralSync';
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: "PERSPECTIFYAI",
-  description: "Finance Platform",
+  title: 'PERSPECTIFYAI',
+  description: 'Finance Platform',
 };
 
 interface RootLayoutProps {
@@ -32,9 +31,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
           className={`${inter.variable} font-sans bg-background text-foreground antialiased`}
         >
           <HydrationFix>
-            {/* Wrap the app content in a ClientWrapper for client-only logic */}
             <ClientWrapper>
-              {/* 👇 Referral sync logic goes here */}
+              {/* Referral sync logic */}
               <ReferralSync />
 
               {/* Navbar */}
@@ -48,8 +46,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 {children}
               </main>
 
-              {/* Notifications */}
-              <Toaster richColors />
+              {/* Toast Notifications */}
+              <Toaster richColors position="top-right" />
             </ClientWrapper>
           </HydrationFix>
         </body>
