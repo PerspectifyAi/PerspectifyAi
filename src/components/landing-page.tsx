@@ -9,6 +9,8 @@ import Footer from '@/components/Footer'
 import PartnershipSection from './landing/PartnershipSection'
 import FAQAndContactSection from './landing/faq-and-contact'
 import TeamSection from './landing/TeamSection'
+import WaitlistBanner from './landing/WaitlistBanner' // ✅ Import Waitlist Banner
+import CommunityContribution from './landing/CommunityContribution'
 
 const LandingPage: React.FC = () => {
   // Fix: Scroll to section if URL contains a hash (e.g. /#features)
@@ -25,23 +27,31 @@ const LandingPage: React.FC = () => {
   }, [])
 
   return (
-    <div className="min-h-screen bg-white scroll-smooth">
-      {/* Hero Section */}
-      <section id="home">
-      <HeroSection />
+    <div className="min-h-screen bg-white scroll-smooth pt-8"> {/* Added pt-8 to the top padding of the entire page */}
+
+      {/* Waitlist Banner just below header */}
+      <section id="home" className="pt-0">
       </section>
-      
+      <WaitlistBanner />
+
+      {/* Hero Section */}
+      <section id="home" className="pt-0"> {/* Added pt-12 for padding-top */}
+        <HeroSection />
+      </section>
 
       {/* About Section */}
-      <section  id="about-us">
-      <AboutSection />
+      <section id="about-us" className="pt-0"> {/* Added pt-12 for padding-top */}
+        <AboutSection />
       </section>
-      
 
       {/* Features Section */}
-      <section id="features">
+      <section id="features" className="pt-0"> {/* Added pt-12 for padding-top */}
         <FeaturesSection />
       </section>
+
+
+      {/* CommunityContribution seaction */}
+      <CommunityContribution/>
 
       {/* Testimonials */}
       <TestimonialsSection />
@@ -52,7 +62,7 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact">
+      <section id="contact" className="pt-0"> {/* Added pt-12 for padding-top */}
         <FAQAndContactSection />
       </section>
 

@@ -1,38 +1,62 @@
-'use client';
+"use client";
 
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import Image from "next/image";
-import clsx from "clsx";
+import { useRef } from "react";
 
 const testimonials = [
   {
-    name: "Arjun Mehta",
-    role: "Freelancer",
-    // image: "/images/users/arjun.jpg",
-    image: "https://randomuser.me/api/portraits/women/75.jpg",
+    name: "Malcolm Hodnyl",
+    role: "Fashion Designer",
+    image: "https://randomuser.me/api/portraits/men/32.jpg",
     quote:
-      "PerspectifyAI completely changed how I manage my finances. It's like having a personal finance coach 24/7.",
+      "Perspectify has been incredibly useful in transforming how I feel and manage my business. I’ve gained a lot of insight into financial acumen and how my habits and mentality can significantly impact my finances.",
   },
   {
-    name: "Riya Sharma",
+    name: "Michael Gyasi",
+    role: "MMA Fighter",
+    image: "https://randomuser.me/api/portraits/men/45.jpg",
+    quote:
+      "Perspectify’s personalisation is amazing. It doesn’t feel like I’m talking to an AI — it’s like having a friend who’s also a financial genie. Perspectify has helped me map out my MMA career, keeping me on track and managing my finances effectively, all while staying cost-efficient. It’s been a game-changer for me.",
+  },
+  {
+    name: "Amira Johnson",
     role: "Startup Founder",
-    image: "https://randomuser.me/api/portraits/men/75.jpg", 
+    image: "https://randomuser.me/api/portraits/women/44.jpg",
     quote:
-      "The AI insights and receipt scanner saved me hours every month. It's a must-have for any business owner.",
+      "Perspectify showed me what school never did — how to think strategically about money. The AI gave me personalised insights that actually stuck.",
   },
   {
-    name: "Daniel Lee",
-    role: "Product Designer",
-    image: "https://randomuser.me/api/portraits/women/74.jpg",
+    name: "Ravi Patel",
+    role: "Freelance Creative",
+    image: "https://randomuser.me/api/portraits/men/64.jpg",
     quote:
-      "The UI is so clean and intuitive. Budgeting feels effortless for the first time in years.",
+      "Before Perspectify, I was surviving. Now I’m building. It’s more than budgeting — it’s mindset training disguised as money coaching.",
+  },
+  {
+    name: "Danielle Mbaye",
+    role: "Graduate & Aspiring Investor",
+    image: "https://randomuser.me/api/portraits/women/65.jpg",
+    quote:
+      "Perspectify helped me understand how to start investing with confidence, even on a student income. It made me believe financial freedom was possible.",
   },
 ];
 
 const TestimonialsSection = () => {
+  const controls = useAnimation();
+  const containerRef = useRef(null);
+
+  const stopAnimation = () => {
+    controls.stop();
+  };
+
+  const startAnimation = () => {
+    controls.start({ x: "-100%" });
+  };
+
   return (
     <section className="relative bg-[#0f0f0f] text-white py-32 px-4 overflow-hidden">
-      {/* Curved SVG wave left to right */}
+      {/* Curved SVG wave */}
       <div className="absolute top-0 left-0 w-full z-0">
         <svg
           viewBox="0 0 1440 150"
@@ -51,39 +75,45 @@ const TestimonialsSection = () => {
           What Our Users Say
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          {testimonials.map((t, i) => (
-            <motion.div
+        <motion.div
+          ref={containerRef}
+          initial={{ x: "0%" }}
+          animate={controls}
+          transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
+          onMouseEnter={stopAnimation}
+          onMouseLeave={startAnimation}
+          onTouchStart={stopAnimation}
+          onTouchEnd={startAnimation}
+          className="flex gap-8 w-max"
+        >
+          {[...testimonials, ...testimonials].map((t, i) => (
+            <div
               key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: i * 0.2 }}
-              viewport={{ once: true }}
-              className={clsx(
-                "bg-[#1a1a1a] p-6 rounded-2xl border border-transparent hover:border-purple-500",
-                "shadow-md hover:shadow-purple-500/30 transition-all duration-300 cursor-pointer hover:scale-105"
-              )}
+              className="min-w-[300px] max-w-sm bg-[#1a1a1a] p-6 rounded-2xl border border-transparent hover:border-purple-500 shadow-md hover:shadow-purple-500/30 transition-all duration-300 cursor-pointer hover:scale-105"
             >
               <div className="flex items-center gap-4 mb-4">
                 <Image
-                  src={t.image || "/images/users/default-avatar.png"}
+                  src={t.image}
                   alt={t.name}
                   width={50}
                   height={50}
                   className="rounded-full object-cover border-2 border-purple-500"
                 />
                 <div className="text-left">
-                  <h4 className="text-lg font-semibold text-white">{t.name}</h4>
+                  <h4 className="text-lg font-semibold text-white">
+                    {t.name}
+                  </h4>
                   <p className="text-sm text-purple-400">{t.role}</p>
                 </div>
               </div>
               <p className="text-gray-300 text-sm leading-relaxed">“{t.quote}”</p>
-            </motion.div>
+            </div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 };
 
 export default TestimonialsSection;
+

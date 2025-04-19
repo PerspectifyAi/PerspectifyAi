@@ -1,7 +1,7 @@
 "use server";
 
 import { Resend, CreateEmailResponse } from "resend";
-import WelcomeEmail from "../emails/welcome-email";
+import { WelcomeEmail } from "@/emails/welcome-email";
 
 interface SendEmailBaseParams {
   to: string;

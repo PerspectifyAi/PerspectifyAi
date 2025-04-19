@@ -1,15 +1,58 @@
 "use client";
-import { SignUp } from "@clerk/nextjs";
-import React from "react";
 
-const SignUpPage = () => {
+import React, { useEffect, useState } from "react";
+import { SignUp, useUser } from "@clerk/nextjs";
+
+const SignUpPage: React.FC = () => {
+  const { user, isLoaded } = useUser();
+  const [emailSent, setEmailSent] = useState(false);
+
+  useEffect(() => {
+    // once Clerk has loaded the user and we haven't emailed yet
+    if (isLoaded && user && !emailSent) {
+      const primaryEmail = user.primaryEmailAddress?.emailAddress;
+      const name = user.firstName || user.fullName || "there";
+
+      if (!primaryEmail) {
+        console.warn("[WelcomeEmail] no primary email found, skipping send");
+        return;
+      }
+
+      const sendWelcomeEmail = async () => {
+        try {
+          console.log(`[WelcomeEmail] sending to ${primaryEmail}`);
+          const res = await fetch("/api/send-email", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: primaryEmail,
+              userName: name,
+            }),
+          });
+          const payload = await res.json();
+
+          if (res.ok) {
+            console.log("[WelcomeEmail] sent successfully:", payload);
+            setEmailSent(true);
+          } else {
+            console.error("[WelcomeEmail] API error:", payload);
+          }
+        } catch (err) {
+          console.error("[WelcomeEmail] network error:", err);
+        }
+      };
+
+      sendWelcomeEmail();
+    }
+  }, [isLoaded, user, emailSent]);
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-black px-4">
       <div className="w-full max-w-md p-6 rounded-xl shadow-md bg-[#0c0c0e] border border-[#1f2937]">
         <SignUp
           appearance={{
             variables: {
-              colorPrimary: "#3B82F6", // blue-500
+              colorPrimary: "#3B82F6",
               colorBackground: "#0c0c0e",
               colorText: "#ffffff",
               colorInputBackground: "#1f2937",

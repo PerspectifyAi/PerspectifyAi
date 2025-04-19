@@ -1,4 +1,4 @@
-// app/layout.tsx
+// src/app/layout.tsx (Server Component)
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import "./globals.css";
@@ -7,6 +7,8 @@ import ThemeToggleButton from "../components/ui/theme-toggle-button";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 import HydrationFix from "@/components/HydrationFix";
+import ClientWrapper from "./ClientWrapper";
+import ReferralSync from "@/components/ReferralSync";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -26,21 +28,29 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <head>
           <link rel="icon" href="/logo.png" type="image/png" sizes="any" />
         </head>
-        <body className={`${inter.variable} font-sans bg-background text-foreground antialiased`}>
+        <body
+          className={`${inter.variable} font-sans bg-background text-foreground antialiased`}
+        >
           <HydrationFix>
-            {/* Navbar */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-card shadow-sm">
-              <Header />
-              <ThemeToggleButton />
-            </div>
+            {/* Wrap the app content in a ClientWrapper for client-only logic */}
+            <ClientWrapper>
+              {/* 👇 Referral sync logic goes here */}
+              <ReferralSync />
 
-            {/* Main Content */}
-            <main className="min-h-screen px-4 py-4 animate-fadeIn">
-              {children}
-            </main>
+              {/* Navbar */}
+              <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-card shadow-sm">
+                <Header />
+                <ThemeToggleButton />
+              </div>
 
-            {/* Notifications */}
-            <Toaster richColors />
+              {/* Main Content */}
+              <main className="min-h-screen px-4 py-4 animate-fadeIn">
+                {children}
+              </main>
+
+              {/* Notifications */}
+              <Toaster richColors />
+            </ClientWrapper>
           </HydrationFix>
         </body>
       </html>

@@ -1,8 +1,6 @@
-
 'use client'
 
 import Link from 'next/link'
-import { Instagram, Twitter, Linkedin, Facebook } from 'lucide-react'
 
 export default function Footer() {
   return (
@@ -30,20 +28,20 @@ export default function Footer() {
         {/* Connect With Us */}
         <div>
           <h3 className="text-lg font-semibold mb-4">Connect With Us</h3>
-          <div className="flex space-x-4 text-gray-300">
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="Twitter">
-              <Twitter className="h-5 w-5 hover:text-white transition" />
-            </a>
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" title="Facebook">
-              <Facebook className="h-5 w-5 hover:text-white transition" />
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" title="LinkedIn">
-              <Linkedin className="h-5 w-5 hover:text-white transition" />
-            </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" title="Instagram">
-              <Instagram className="h-5 w-5 hover:text-white transition" />
-            </a>
-          </div>
+          <ul className="space-y-2 text-sm text-gray-300">
+            <li>
+              <a href="https://www.linkedin.com/company/perspectifyai" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-all duration-200">LinkedIn</a>
+            </li>
+            <li>
+              <a href="https://www.instagram.com/perspectifyai" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-all duration-200">Instagram</a>
+            </li>
+            <li>
+              <a href="https://x.com/perspectifyai" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-all duration-200">Twitter (X)</a>
+            </li>
+            <li>
+              <a href="https://ko-fi.com/perspectifyai" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-all duration-200">Support or Join Us on Ko-Fi</a>
+            </li>
+          </ul>
         </div>
 
         {/* Newsletter */}
@@ -67,7 +65,7 @@ export default function Footer() {
           <ul className="space-y-2 text-sm text-gray-300">
             <li>📍 123 Innovation Street</li>
             <li>📞 1-800-PERSPECTIFY</li>
-            <li>📧 contact@perspectify.com</li>
+            <li>📧 Support@perspectifyai.com</li>
           </ul>
         </div>
       </div>

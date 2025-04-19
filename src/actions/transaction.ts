@@ -68,7 +68,7 @@ export async function createTransaction(data: TransactionData): Promise<{ succes
       const newTransaction = await tx.transaction.create({
         data: {
           ...data,
-          date: new Date(data.date), // ✅ Fix: convert string to Date
+          date: new Date(data.date),
           userId: user.id,
           nextRecurringDate:
             data.isRecurring && data.recurringInterval
@@ -136,7 +136,7 @@ export async function updateTransaction(
         where: { id, userId: user.id },
         data: {
           ...data,
-          date: new Date(data.date), // ✅ Fix again for update
+          date: new Date(data.date), 
           nextRecurringDate:
             data.isRecurring && data.recurringInterval
               ? calculateNextRecurringDate(data.date, data.recurringInterval)
