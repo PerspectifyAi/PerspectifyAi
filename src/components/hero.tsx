@@ -14,7 +14,7 @@ const HeroSection: React.FC = () => {
       {/* Background Logo */}
       <div className="absolute inset-0 flex items-center justify-center z-0">
         <Image
-          src="/logo.png"
+          src="/official_logo.png"
           alt="PerspectifyAI Logo"
           width={450}
           height={450}
