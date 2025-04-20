@@ -14,6 +14,31 @@ const nextConfig: NextConfig = {
     };
     return config;
   },
+
+  async redirects() {
+    return [
+      {
+        source: '/service-page/perspectify-waiting-list',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/perspectifyai-create-your-ai-financial-mentor',
+        destination: '/#about-us',
+        permanent: true,
+      },
+      {
+        source: '/coming-soon',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/coming-soon/questions-answers',
+        destination: '/#contact',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

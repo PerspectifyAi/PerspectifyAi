@@ -63,8 +63,9 @@ export default function PartnershipSection() {
           <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-purple-400 mb-4 border-b border-purple-500/30 inline-block pb-2">
             Our Partners
           </h3>
+
           {/* Enlarged Logo Strip */}
-          <div className="max-w-lg mx-auto flex justify-center items-center gap-12 mb-8">
+          <div className="max-w-lg mx-auto flex justify-center items-center gap-12 mb-8 flex-wrap">
             <Image
               src="/Partner/bizichat.jpg"
               alt="Bizichat"
@@ -80,7 +81,9 @@ export default function PartnershipSection() {
               className="object-contain transition-transform duration-300 hover:scale-105"
             />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+          {/* Partner Cards Centered */}
+          <div className="flex flex-wrap justify-center gap-6">
             {confirmedPartners.map((partner, idx) => (
               <motion.a
                 key={idx}
@@ -90,7 +93,7 @@ export default function PartnershipSection() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.2 }}
-                className="block bg-[#1a1a1a] p-5 rounded-xl border border-purple-500/20 hover:border-purple-500 transition cursor-pointer"
+                className="w-full sm:w-[300px] bg-[#1a1a1a] p-5 rounded-xl border border-purple-500/20 hover:border-purple-500 transition cursor-pointer"
               >
                 <div className="flex justify-between items-center">
                   <div>
@@ -113,14 +116,14 @@ export default function PartnershipSection() {
         >
           <Button
             onClick={() => router.push('/partner')}
-            className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-full text-lg transition duration-300"
+            className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-full text-lg transition duration-300 cursor-pointer"
           >
             Partner With Us
           </Button>
           <Button
             variant="outline"
             onClick={() => router.push('/why-partner')}
-            className="border border-purple-500 text-purple-300 hover:text-white hover:border-purple-700 hover:bg-purple-800 transition px-6 py-3 rounded-full text-lg"
+            className="border border-purple-500 text-purple-300 hover:text-white hover:border-purple-700 hover:bg-purple-800 transition px-6 py-3 rounded-full text-lg cursor-pointer"
           >
             Why Become Our Partner?
           </Button>

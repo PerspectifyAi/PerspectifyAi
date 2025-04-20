@@ -46,7 +46,7 @@ const testimonials = [
 
 export default function TestimonialsSection() {
   const controls = useAnimation();
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     controls.start({ x: '-100%' });
@@ -54,6 +54,11 @@ export default function TestimonialsSection() {
 
   const stopAnimation = () => controls.stop();
   const startAnimation = () => controls.start({ x: '-100%' });
+
+  // Ensure containerRef.current is defined and scrollWidth can be safely accessed
+  const dragConstraints = containerRef.current
+    ? { left: -containerRef.current.scrollWidth, right: 0 }
+    : { left: -2000, right: 0 };
 
   return (
     <section className="relative bg-[#0f0f0f] text-white py-32 px-4 overflow-hidden">
@@ -85,12 +90,16 @@ export default function TestimonialsSection() {
           onMouseLeave={startAnimation}
           onTouchStart={stopAnimation}
           onTouchEnd={startAnimation}
-          className="flex gap-8 w-max mx-auto"
+          drag="x"
+          dragConstraints={dragConstraints}
+          dragElastic={0.1}
+          dragMomentum={false}
+          className="flex gap-8 w-max mx-auto cursor-grab active:cursor-grabbing"
         >
           {[...testimonials, ...testimonials].map((t, i) => (
             <div
               key={i}
-              className="min-w-[300px] max-w-sm bg-[#1a1a1a] p-6 rounded-2xl border border-transparent hover:border-purple-500 shadow-md hover:shadow-purple-500/30 transition-all duration-300 cursor-pointer hover:scale-105"
+              className="min-w-[300px] max-w-sm bg-[#1a1a1a] p-6 rounded-2xl border border-transparent hover:border-purple-500 shadow-md hover:shadow-purple-500/30 transition-all duration-300 hover:scale-105"
             >
               {t.image && (
                 <div className="flex justify-center mb-4">

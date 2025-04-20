@@ -50,7 +50,7 @@ export default function CommunityContribution() {
             <Button
               variant="outline"
               onClick={() => router.push('/waitlist')}
-              className="w-full sm:w-auto border-purple-500 text-purple-400 hover:bg-purple-600 hover:text-white hover:border-purple-600 transition-all flex items-center justify-center gap-2 group"
+              className="w-full sm:w-auto border-purple-500 text-purple-400 hover:bg-purple-600 hover:text-white hover:border-purple-600 transition-all flex items-center justify-center gap-2 group cursor-pointer"
             >
               <Sparkles size={18} className="group-hover:animate-pulse" />
               Join the Waitlist
@@ -60,7 +60,7 @@ export default function CommunityContribution() {
             <Button
               variant="outline"
               onClick={() => window.open('https://ko-fi.com/perspectifyai', '_blank')}
-              className="w-full sm:w-auto border-purple-500 text-purple-400 hover:bg-purple-600 hover:text-white hover:border-purple-600 transition-all flex items-center justify-center gap-2 group"
+              className="w-full sm:w-auto border-purple-500 text-purple-400 hover:bg-purple-600 hover:text-white hover:border-purple-600 transition-all flex items-center justify-center gap-2 group cursor-pointer"
             >
               <HandHeart size={18} className="group-hover:animate-pulse" />
               Support on Ko-Fi
@@ -70,7 +70,7 @@ export default function CommunityContribution() {
             <Button
               variant="outline"
               onClick={() => router.push('https://t.me/perspectifybot?start=1727792237265')}
-              className="w-full sm:w-auto border-purple-500 text-purple-400 hover:bg-purple-600 hover:text-white hover:border-purple-600 transition-all flex items-center justify-center gap-2 group"
+              className="w-full sm:w-auto border-purple-500 text-purple-400 hover:bg-purple-600 hover:text-white hover:border-purple-600 transition-all flex items-center justify-center gap-2 group cursor-pointer"
             >
               <Bell size={18} className="group-hover:animate-pulse" />
               Join telegram

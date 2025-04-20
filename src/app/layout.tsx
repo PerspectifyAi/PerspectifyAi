@@ -15,6 +15,9 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 export const metadata: Metadata = {
   title: 'PERSPECTIFYAI',
   description: 'Finance Platform',
+  icons: {
+    icon: '/logo.png', 
+  },
 };
 
 interface RootLayoutProps {
@@ -26,7 +29,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <ClerkProvider>
       <html lang="en" className="dark">
         <head>
-          <link rel="icon" href="/logo.png" type="image/png" sizes="any" />
+          {/* Meta tags for SEO */}
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <meta name="theme-color" content="#000000" /> {/* Custom theme color for mobile */}
         </head>
         <body
           suppressHydrationWarning

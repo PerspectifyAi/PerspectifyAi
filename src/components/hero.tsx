@@ -38,17 +38,17 @@ const HeroSection: React.FC = () => {
 
         <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
           <Link href="/dashboard">
-            <Button className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-2 rounded-lg transition">
+            <Button className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-2 rounded-lg transition cursor-pointer">
               Get Started
             </Button>
           </Link>
           <Link href="https://ko-fi.com/perspectifyai" target="_blank">
-            <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-lg transition">
+            <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-lg transition cursor-pointer">
               Support on Ko-fi
             </Button>
           </Link>
           <Link href="/waitlist">
-            <Button className="bg-transparent border border-purple-500 text-purple-300 hover:bg-purple-800/30 font-semibold px-6 py-2 rounded-lg transition">
+            <Button className="bg-transparent border border-purple-500 text-purple-300 hover:bg-purple-800/30 font-semibold px-6 py-2 rounded-lg transition cursor-pointer">
               Join Waitlist
             </Button>
           </Link>

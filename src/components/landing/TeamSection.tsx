@@ -6,12 +6,12 @@ import Image from 'next/image';
 const team = [
   {
     name: 'Christopher Tate',
-    role: 'Co-Founder | Strategic Architect & Creative Executioner',
+    role: 'Co-Founder | Strategy & Creative Executioner',
     image: '/founders/founder1.png',
   },
   {
     name: 'Isaiah',
-    role: 'Co-Founder | Operations &  | Community Growth',
+    role: 'Co-Founder | Operations & Community Growth',
     image: '/founders/founder2.png',
   },
   {
