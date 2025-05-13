@@ -108,7 +108,7 @@ export default function WaitlistPage() {
 
   if (!isLoaded || !isSignedIn) return null;
 
-  const spotsLeft = 500 - leaderboard.length;
+  const spotsLeft = 137 - leaderboard.length;
 
   return (
     <div className="min-h-screen bg-black text-white px-4 py-6 mt-10">

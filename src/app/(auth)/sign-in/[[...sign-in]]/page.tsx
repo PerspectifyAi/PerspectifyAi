@@ -8,7 +8,7 @@ export default function SignInPage() {
         <SignIn
           appearance={{
             variables: {
-              colorPrimary: "#3B82F6", // blue-500
+              colorPrimary: "#3B82F6", 
               colorBackground: "#0c0c0e",
               colorText: "#ffffff",
               colorInputBackground: "#1f2937",

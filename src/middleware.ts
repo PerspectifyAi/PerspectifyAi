@@ -1,35 +1,43 @@
+// middleware.ts
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-// Define protected routes using Clerk's matcher
+// Paths that require an authenticated user
 const isProtectedRoute = createRouteMatcher([
   "/dashboard(.*)",
   "/account(.*)",
   "/transaction(.*)",
-  // Add more protected paths below if needed
-  // "/budget(.*)",
-  // "/settings(.*)",
 ]);
 
-// Clerk middleware for route protection
+// Paths that should be open to everyone (sign-in & sign-up)
+const isPublicRoute = createRouteMatcher([
+  "/sign-in(.*)",
+  "/sign-up(.*)",
+]);
+
 export default clerkMiddleware(async (auth, req) => {
   const { userId, redirectToSignIn } = await auth();
 
-  // Redirect to sign-in if the user is not authenticated and route is protected
-  if (!userId && isProtectedRoute(req)) {
+  // If this is a public page, just continue
+  if (isPublicRoute(req)) {
+    return NextResponse.next();
+  }
+
+  // If it's protected and the user is not signed in, redirect to sign-in
+  if (isProtectedRoute(req) && !userId) {
     return redirectToSignIn();
   }
 
-  // Allow request to proceed
+  // Everything else (including static assets, API routes, etc.)
   return NextResponse.next();
 });
 
-// Middleware matcher config to skip static/internal assets
+// Skip Clerk for static files and Next internals
 export const config = {
   matcher: [
-    // Run for all routes except Next.js internals and static files
+    // all routes except Next internals & static files
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    // Always include API routes
+    // API & TRPC
     "/(api|trpc)(.*)",
   ],
 };
