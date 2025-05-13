@@ -99,7 +99,7 @@ const Header: React.FC = () => {
           <SignedOut>
             <Link href="/sign-up">
               <Button className="group bg-white text-purple-800 transition hover:bg-purple-100 relative overflow-hidden cursor-pointer shadow hover:shadow-purple-500/30">
-                <span className="relative z-10">Sign Up</span>
+                <span className="relative z-10">Login</span>
                 <span className="absolute inset-0 bg-purple-300 opacity-0 group-hover:opacity-20 transition duration-500 rounded-lg" />
               </Button>
             </Link>
