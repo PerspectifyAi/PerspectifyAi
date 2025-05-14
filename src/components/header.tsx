@@ -8,8 +8,9 @@ import {
   useUser,
   SignedIn,
   SignedOut,
+  SignUpButton,
   UserButton,
-} from '@clerk/nextjs'  // Removed SignInButton import
+} from '@clerk/nextjs'
 import { Button } from './ui/button'
 import { LayoutDashboard, PenBox, Menu, X } from 'lucide-react'
 import { usePathname } from 'next/navigation'
@@ -97,12 +98,12 @@ const Header: React.FC = () => {
           </SignedIn>
 
           <SignedOut>
-            <Link href="/sign-up">
+            <SignUpButton forceRedirectUrl="/dashboard">
               <Button className="group bg-white text-purple-800 transition hover:bg-purple-100 relative overflow-hidden cursor-pointer shadow hover:shadow-purple-500/30">
                 <span className="relative z-10">Login</span>
                 <span className="absolute inset-0 bg-purple-300 opacity-0 group-hover:opacity-20 transition duration-500 rounded-lg" />
               </Button>
-            </Link>
+            </SignUpButton>
           </SignedOut>
         </div>
 
@@ -179,12 +180,11 @@ const Header: React.FC = () => {
           </SignedIn>
 
           <SignedOut>
-            <Link
-              href="/sign-up"
-              className="mt-2 text-purple-300 hover:text-white transition cursor-pointer"
-            >
-              Login
-            </Link>
+            <SignUpButton forceRedirectUrl="/dashboard">
+              <div className="mt-2 text-purple-300 hover:text-white transition cursor-pointer">
+                Login
+              </div>
+            </SignUpButton>
           </SignedOut>
         </div>
       </div>

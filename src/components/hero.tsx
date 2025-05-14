@@ -4,6 +4,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import { SignUpButton } from '@clerk/nextjs';
 
 const HeroSection: React.FC = () => {
   return (
@@ -37,11 +38,11 @@ const HeroSection: React.FC = () => {
         </p>
 
         <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-          <Link href="/dashboard">
+          <SignUpButton forceRedirectUrl="/dashboard">
             <Button className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-2 rounded-lg transition cursor-pointer">
               Get Started
             </Button>
-          </Link>
+          </SignUpButton>
           <Link href="https://ko-fi.com/perspectifyai" target="_blank">
             <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-lg transition cursor-pointer">
               Support on Ko-fi
