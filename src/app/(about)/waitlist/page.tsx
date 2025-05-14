@@ -35,7 +35,7 @@ export default function WaitlistPage() {
   // If not signed in, redirect to sign-in
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
-      router.push('/sign-in?redirect_url=/waitlist');
+      router.push('/sign-up?redirect_url=/waitlist');
     }
   }, [isLoaded, isSignedIn, router]);
 
