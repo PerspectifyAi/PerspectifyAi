@@ -1,11 +1,16 @@
-import { NextResponse } from 'next/server'
+// File: app/api/waitlist/referral-count/route.ts
+
+import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/prisma'
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   const url = new URL(req.url)
-  const ref  = url.searchParams.get('ref')
+  const ref = url.searchParams.get('ref')
   if (!ref) {
-    return NextResponse.json({ error: 'Missing ref code' }, { status: 400 })
+    return NextResponse.json(
+      { error: 'Missing ref code' },
+      { status: 400 }
+    )
   }
 
   try {
@@ -14,11 +19,20 @@ export async function GET(req: Request) {
       select: { referrals: true }
     })
     if (!user) {
-      return NextResponse.json({ error: 'Invalid referral code' }, { status: 404 })
+      return NextResponse.json(
+        { error: 'Invalid referral code' },
+        { status: 404 }
+      )
     }
-    return NextResponse.json({ referralCount: user.referrals })
+    return NextResponse.json(
+      { referralCount: user.referrals },
+      { status: 200 }
+    )
   } catch (err) {
     console.error('Referral-count GET error:', err)
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
   }
 }

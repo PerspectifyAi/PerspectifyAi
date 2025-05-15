@@ -23,13 +23,14 @@ const incentives = [
       "Top referrers will win exciting prizes including free subscriptions.",
     badge: "Top 10 🔥",
   },
-  {
-    title: "Subscription Prizes",
-    icon: <Sparkles className="w-6 h-6 text-purple-400" />,
-    description:
-      "Win 6-month, 3-month, or 1-month free subscriptions based on your rank!",
-    badge: "Win Big ✨",
-  },
+ {
+  title: "Subscription Prizes",
+  icon: <Sparkles className="w-6 h-6 text-purple-400" />,
+  description:
+    "Top referrers will receive exclusive free subscriptions as a reward!",
+  badge: "Win Big ✨",
+}
+
 ];
 
 export default function WhyWaitlistPage() {
@@ -78,7 +79,7 @@ export default function WhyWaitlistPage() {
         >
           <Link href="/waitlist">
             <Button
-              className="text-lg px-6 py-3 rounded-2xl shadow-lg bg-indigo-600 hover:bg-indigo-700 hover:scale-105 transition-all duration-300"
+              className="text-lg px-6 py-3 rounded-2xl shadow-lg bg-indigo-600 hover:bg-indigo-700 hover:scale-105 transition-all duration-300 cursor-pointer"
             >
               🚀 Join the Waitlist
             </Button>

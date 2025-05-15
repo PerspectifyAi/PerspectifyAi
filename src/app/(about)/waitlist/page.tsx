@@ -1,23 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useUser } from '@clerk/nextjs';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Copy, Check } from 'lucide-react';
 
 interface LeaderboardEntry {
   name: string;
-  coins: number;
   referrals: number;
   rank: number;
 }
 
 export default function WaitlistPage() {
-  const { user, isSignedIn, isLoaded } = useUser();
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [referredBy, setReferredBy] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [alreadyJoined, setAlreadyJoined] = useState(false);
@@ -32,19 +30,11 @@ export default function WaitlistPage() {
     if (r) sessionStorage.setItem('referredBy', r);
   }, [searchParams]);
 
-  // If not signed in, redirect to sign-in
+  // Prefill referral from session
   useEffect(() => {
-    if (isLoaded && !isSignedIn) {
-      router.push('/sign-up?redirect_url=/waitlist');
-    }
-  }, [isLoaded, isSignedIn, router]);
-
-  // Prefill name & referral
-  useEffect(() => {
-    if (!isLoaded || !user) return;
-    setName(user.fullName || '');
-    setReferredBy(sessionStorage.getItem('referredBy') || '');
-  }, [isLoaded, user]);
+    const storedRef = sessionStorage.getItem('referredBy');
+    if (storedRef) setReferredBy(storedRef);
+  }, []);
 
   // Fetch leaderboard
   useEffect(() => {
@@ -65,23 +55,24 @@ export default function WaitlistPage() {
   }, []);
 
   const handleSubmit = async () => {
-    if (!name.trim()) return alert('Please enter your name');
+    if (!name.trim() || !email.trim()) {
+      return alert('Please enter your name and email');
+    }
     setLoading(true);
     try {
       const res = await fetch('/api/waitlist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, referredBy: referredBy || undefined }),
+        body: JSON.stringify({ name, email, referredBy: referredBy || undefined }),
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        // New joiner
         setReferralId(data.referralId);
+        setAlreadyJoined(true);
         router.push(`/thank-you?ref=${data.referralId}`);
       } else {
-        // Already on waitlist
         setAlreadyJoined(true);
         if (data.referralId) {
           setReferralId(data.referralId);
@@ -105,8 +96,6 @@ export default function WaitlistPage() {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
-
-  if (!isLoaded || !isSignedIn) return null;
 
   const spotsLeft = 137 - leaderboard.length;
 
@@ -140,7 +129,7 @@ export default function WaitlistPage() {
           </>
         ) : (
           <>
-            <div className="mb-6">
+            <div className="mb-4">
               <label className="block mb-2 font-semibold">Your Name</label>
               <input
                 type="text"
@@ -148,6 +137,16 @@ export default function WaitlistPage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="John Doe"
+              />
+            </div>
+            <div className="mb-6">
+              <label className="block mb-2 font-semibold">Your Email</label>
+              <input
+                type="email"
+                className="w-full px-4 py-2 bg-black border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-400"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
               />
             </div>
 
@@ -168,11 +167,11 @@ export default function WaitlistPage() {
             {/* Additional Buttons */}
             <div className="mt-4 flex flex-col sm:flex-row gap-3">
               <button
-                onClick={() => router.push(`/thank-you?ref=${referralId}`)}
-                className="w-full sm:w-auto bg-red-500 hover:bg-red-600 px-6 py-3 rounded-lg font-semibold transition cursor-pointer"
-              >
-                My Referral Code
-              </button>
+  onClick={() => router.push('/waitlist/lookup')}
+  className="w-full sm:w-auto bg-red-500 hover:bg-red-600 px-6 py-3 rounded-lg font-semibold transition cursor-pointer"
+>
+  My Referral Code
+</button>
               <button
                 onClick={() => router.push('/why-waitlist')}
                 className="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-lg font-semibold transition cursor-pointer"
@@ -198,8 +197,6 @@ export default function WaitlistPage() {
                 <th className="py-2 pr-4">#</th>
                 <th className="py-2 pr-4">Name</th>
                 <th className="py-2 pr-4">Referrals</th>
-                <th className="py-2 pr-4">Coins</th>
-                <th className="py-2 pr-4">Rewards</th>
               </tr>
             </thead>
             <tbody>
@@ -208,12 +205,6 @@ export default function WaitlistPage() {
                   <td className="py-2 pr-4">{i + 1}</td>
                   <td className="py-2 pr-4">{e.name.split(' ')[0]}***</td>
                   <td className="py-2 pr-4">{e.referrals}</td>
-                  <td className="py-2 pr-4">{e.coins}</td>
-                  <td className="py-2 pr-4">
-                    {e.rank === 1 && <span className="text-yellow-300">6 Months Premium</span>}
-                    {e.rank === 2 && <span className="text-green-300">3 Months Premium</span>}
-                    {e.rank === 3 && <span className="text-blue-300">1 Month Premium</span>}
-                  </td>
                 </tr>
               ))}
             </tbody>
@@ -238,7 +229,7 @@ export default function WaitlistPage() {
             </button>
           </div>
           <p className="mt-3 text-sm text-gray-400">
-            Share this link to earn coins and climb the leaderboard!
+            Share this link to climb the leaderboard!
           </p>
         </div>
       )}
@@ -247,7 +238,7 @@ export default function WaitlistPage() {
       <div className="text-center mt-10">
         <p className="mb-3 text-lg font-semibold">🔥 Join our community!</p>
         <a
-          href="https://t.me/perspectifybot?start=1727792237265"
+          href="https://t.me/+KLl14sGMX9lmOGQ9"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition cursor-pointer"
