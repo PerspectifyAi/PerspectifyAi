@@ -99,6 +99,7 @@ export default function WaitlistPage() {
 
   const spotsLeft = 200 - leaderboard.length;
 
+  
   return (
     <div className="min-h-screen bg-black text-white px-4 py-6 mt-10">
       {/* Header */}
