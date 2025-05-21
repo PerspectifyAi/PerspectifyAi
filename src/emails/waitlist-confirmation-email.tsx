@@ -56,3 +56,5 @@ export function WaitlistConfirmationEmail({ userName }: WaitlistConfirmationProp
     </div>
   );
 }
+
+
