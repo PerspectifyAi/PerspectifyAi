@@ -1,6 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/prisma';
 import { generateReferralId } from '@/app/lib/utils';
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+async function sendWelcomeEmail(email: string, name: string, referralId: string) {
+  try {
+    await resend.emails.send({
+      from: 'YourApp <no-reply@yourapp.com>',
+      to: email,
+      subject: 'Welcome to the Waitlist!',
+      html: `
+        <p>Hi ${name},</p>
+        <p>Thanks for joining the waitlist! Your referral code is <strong>${referralId}</strong>.</p>
+        <p>Share it with your friends to earn rewards.</p>
+      `,
+    });
+    console.log(`Welcome email sent to ${email}`);
+  } catch (error) {
+    console.error('Failed to send welcome email:', error);
+  }
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -77,6 +98,9 @@ export async function POST(req: NextRequest) {
     await db.waitlistUser.create({
       data: { name, email, referralId, referredBy: referredByValid },
     });
+
+    // 5) Send welcome email
+    await sendWelcomeEmail(email, name, referralId);
 
     return NextResponse.json(
       {
