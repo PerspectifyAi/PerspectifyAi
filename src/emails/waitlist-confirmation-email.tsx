@@ -50,6 +50,7 @@ export function WaitlistConfirmationEmail({ userName }: WaitlistConfirmationProp
         </li>
       </ul>
 
+
       <p style={{ marginTop: '20px', fontStyle: 'italic' }}>
         — Isaiah + Chris<br />
         Founders of PerspectifyAI
