@@ -49,8 +49,6 @@ export function WaitlistConfirmationEmail({ userName }: WaitlistConfirmationProp
           🐦 <a href="https://x.com/perspectifyai?s=21" style={{ color: '#3182CE', textDecoration: 'none' }}>X (Twitter)</a>
         </li>
       </ul>
-
-
       <p style={{ marginTop: '20px', fontStyle: 'italic' }}>
         — Isaiah + Chris<br />
         Founders of PerspectifyAI
