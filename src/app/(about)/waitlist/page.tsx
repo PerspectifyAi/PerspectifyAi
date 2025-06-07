@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Copy, Check } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 interface LeaderboardEntry {
   name: string;
@@ -24,19 +25,29 @@ export default function WaitlistPage() {
   const [lbLoading, setLbLoading] = useState(true);
   const [copied, setCopied] = useState(false);
 
-  // Capture ?ref=xyz into sessionStorage
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [wantsUpdates, setWantsUpdates] = useState(false);
+  const [showPolicyModal, setShowPolicyModal] = useState(false);
+
+  const [nameError, setNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [termsError, setTermsError] = useState(false);
+  const [updatesError, setUpdatesError] = useState(false);
+
+  const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
+  const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
+  const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
+
   useEffect(() => {
     const r = searchParams.get('ref');
     if (r) sessionStorage.setItem('referredBy', r);
   }, [searchParams]);
 
-  // Prefill referral from session
   useEffect(() => {
     const storedRef = sessionStorage.getItem('referredBy');
     if (storedRef) setReferredBy(storedRef);
   }, []);
 
-  // Fetch leaderboard
   useEffect(() => {
     async function fetchLb() {
       try {
@@ -54,16 +65,81 @@ export default function WaitlistPage() {
     fetchLb();
   }, []);
 
-  const handleSubmit = async () => {
-    if (!name.trim() || !email.trim()) {
-      return alert('Please enter your name and email');
+  const validateEmail = (email: string) => {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(email);
+  };
+
+  // Initialize EmailJS with your public key
+  useEffect(() => {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+  }, [EMAILJS_PUBLIC_KEY]);
+
+  // Send a confirmation email using the variable names that your EmailJS template expects.
+  // Here we assume your template uses `user_name`, `user_email`, and `referral_link`
+  const sendConfirmationEmail = async (
+    userName: string,
+    userEmail: string,
+    userReferralId: string
+  ) => {
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          name: userName,                        
+          email: userEmail,                      
+          referral_link: `${window.location.origin}/waitlist?ref=${userReferralId}`, 
+        },
+        EMAILJS_PUBLIC_KEY                             // fourth argument is required
+      );
+      console.log('✅ Confirmation email sent');
+    } catch (err) {
+      console.error('❌ Failed to send confirmation email:', err);
     }
+  };
+
+  const handleSubmit = async () => {
+    setNameError(false);
+    setEmailError(false);
+    setTermsError(false);
+    setUpdatesError(false);
+
+    if (!name.trim()) {
+      setNameError(true);
+      return alert('Please enter your name.');
+    }
+
+    if (!email.trim()) {
+      setEmailError(true);
+      return alert('Please enter your email.');
+    }
+    if (!validateEmail(email.trim())) {
+      setEmailError(true);
+      return alert('Please enter a valid email address.');
+    }
+
+    if (!agreedToTerms) {
+      setTermsError(true);
+      return alert('You must agree to the Terms of Service and Privacy Policy.');
+    }
+
+    if (!wantsUpdates) {
+      setUpdatesError(true);
+      return alert('You must agree to receive updates, newsletters, and promotional emails.');
+    }
+
     setLoading(true);
     try {
       const res = await fetch('/api/waitlist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, referredBy: referredBy || undefined }),
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          referredBy: referredBy || undefined,
+          wantsUpdates,
+        }),
       });
 
       const data = await res.json();
@@ -71,6 +147,10 @@ export default function WaitlistPage() {
       if (res.ok) {
         setReferralId(data.referralId);
         setAlreadyJoined(true);
+
+        // Now we send the email to `email.trim()`, using the variable names above.
+        await sendConfirmationEmail(name.trim(), email.trim(), data.referralId);
+
         router.push(`/thank-you?ref=${data.referralId}`);
       } else {
         setAlreadyJoined(true);
@@ -97,11 +177,25 @@ export default function WaitlistPage() {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleTermsCheckboxChange = () => {
+    if (agreedToTerms) {
+      setAgreedToTerms(false);
+      setTermsError(false);
+    } else {
+      setShowPolicyModal(true);
+    }
+  };
+
+  const handlePolicyAccept = () => {
+    setAgreedToTerms(true);
+    setTermsError(false);
+    setShowPolicyModal(false);
+  };
+
   const spotsLeft = 200 - leaderboard.length;
 
-  
   return (
-    <div className="min-h-screen bg-black text-white px-4 py-6 mt-10">
+    <div className="min-h-screen bg-black text-white px-4 py-6 mt-10 relative">
       {/* Header */}
       <div className="text-center mb-6">
         <h1 className="text-4xl font-bold text-purple-400">🚀 Join the Waitlist</h1>
@@ -130,23 +224,50 @@ export default function WaitlistPage() {
           </>
         ) : (
           <>
+            {/* Name Field */}
             <div className="mb-4">
-              <label className="block mb-2 font-semibold">Your Name</label>
+              <label
+                htmlFor="name"
+                className={`block mb-2 font-semibold ${nameError ? 'text-red-500' : 'text-gray-100'}`}
+              >
+                Your Name <span className="text-red-500">*</span>
+              </label>
               <input
+                id="name"
                 type="text"
-                className="w-full px-4 py-2 bg-black border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-400"
+                className={`w-full px-4 py-2 bg-black border ${
+                  nameError ? 'border-red-500' : 'border-gray-600'
+                } rounded-lg focus:ring-2 focus:ring-purple-400`}
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  if (nameError) setNameError(false);
+                }}
                 placeholder="John Doe"
               />
             </div>
+
+            {/* Email Field */}
             <div className="mb-6">
-              <label className="block mb-2 font-semibold">Your Email</label>
+              <label
+                htmlFor="email"
+                className={`block mb-2 font-semibold ${emailError ? 'text-red-500' : 'text-gray-100'}`}
+              >
+                Your Email <span className="text-red-500">*</span>
+              </label>
               <input
+                id="email"
                 type="email"
-                className="w-full px-4 py-2 bg-black border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-400"
+                className={`w-full px-4 py-2 bg-black border ${
+                  emailError ? 'border-red-500' : 'border-gray-600'
+                } rounded-lg focus:ring-2 ${
+                  emailError ? 'focus:ring-red-400' : 'focus:ring-purple-400'
+                }`}
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (emailError) setEmailError(false);
+                }}
                 placeholder="you@example.com"
               />
             </div>
@@ -157,6 +278,67 @@ export default function WaitlistPage() {
               </p>
             )}
 
+            {/* Terms & Privacy Checkbox */}
+            <div className="mb-4 flex items-start">
+              <input
+                type="checkbox"
+                id="termsPrivacy"
+                checked={agreedToTerms}
+                onChange={handleTermsCheckboxChange}
+                className={`mt-1 h-4 w-4 ${
+                  termsError
+                    ? 'text-red-500 border-red-500 focus:ring-red-400'
+                    : 'text-purple-500 border-gray-600 focus:ring-purple-400'
+                } bg-black rounded cursor-pointer`}
+              />
+              <label
+                htmlFor="termsPrivacy"
+                className={`ml-2 text-sm ${termsError ? 'text-red-500' : 'text-gray-300'}`}
+              >
+                <span className="text-red-500">*</span> I agree to the{' '}
+                <span
+                  onClick={() => setShowPolicyModal(true)}
+                  className="text-blue-400 underline hover:text-blue-300 cursor-pointer"
+                >
+                  Terms of Service
+                </span>{' '}
+                and{' '}
+                <span
+                  onClick={() => setShowPolicyModal(true)}
+                  className="text-blue-400 underline hover:text-blue-300 cursor-pointer"
+                >
+                  Privacy Policy
+                </span>
+                .
+              </label>
+            </div>
+
+            {/* Updates Checkbox */}
+            <div className="mb-6 flex items-start">
+              <input
+                type="checkbox"
+                id="updates"
+                checked={wantsUpdates}
+                onChange={() => {
+                  setWantsUpdates((prev) => !prev);
+                  if (updatesError) setUpdatesError(false);
+                }}
+                className={`mt-1 h-4 w-4 ${
+                  updatesError
+                    ? 'text-red-500 border-red-500 focus:ring-red-400'
+                    : 'text-green-500 border-gray-600 focus:ring-green-400'
+                } bg-black rounded cursor-pointer`}
+              />
+              <label
+                htmlFor="updates"
+                className={`ml-2 text-sm ${updatesError ? 'text-red-500' : 'text-gray-400'}`}
+              >
+                <span className="text-red-500">*</span> I agree to receive updates,
+                newsletters, and promotional emails from Perspectify.
+              </label>
+            </div>
+
+            {/* Submit Button */}
             <button
               onClick={handleSubmit}
               disabled={loading}
@@ -164,22 +346,6 @@ export default function WaitlistPage() {
             >
               {loading ? 'Submitting...' : 'Submit'}
             </button>
-
-            {/* Additional Buttons */}
-            <div className="mt-4 flex flex-col sm:flex-row gap-3">
-              <button
-  onClick={() => router.push('/waitlist/lookup')}
-  className="w-full sm:w-auto bg-red-500 hover:bg-red-600 px-6 py-3 rounded-lg font-semibold transition cursor-pointer"
->
-  My Referral Code
-</button>
-              <button
-                onClick={() => router.push('/why-waitlist')}
-                className="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-lg font-semibold transition cursor-pointer"
-              >
-                Why Join?
-              </button>
-            </div>
           </>
         )}
       </div>
@@ -247,6 +413,85 @@ export default function WaitlistPage() {
           Telegram Group
         </a>
       </div>
+
+      {/* Policy Modal */}
+      {showPolicyModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 px-4">
+          <div className="bg-gray-900 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 relative">
+            <h2 className="text-2xl font-bold mb-4 text-purple-400">
+              Privacy Policy & Terms of Service
+            </h2>
+
+            <div className="mb-6 space-y-4 text-sm text-gray-300">
+              <h4 className="font-semibold">1. Data We Collect</h4>
+              <ul className="list-disc list-inside">
+                <li>Name (if provided)</li>
+                <li>Email address (for waitlist or updates)</li>
+                <li>Ko-fi donation/member status</li>
+                <li>Chatbot interaction data (used to improve responses)</li>
+                <li>Optional community engagement data (Telegram, etc.)</li>
+              </ul>
+              <h4 className="font-semibold">2. How We Use Your Data</h4>
+              <ul className="list-disc list-inside">
+                <li>Deliver chatbot guidance</li>
+                <li>Offer personalized prompts</li>
+                <li>Track engagement for waitlist features</li>
+                <li>Email updates (if opted in)</li>
+                <li>Assign access to features, roles, or community tiers</li>
+              </ul>
+              <h4 className="font-semibold">3. Data Protection</h4>
+              <ul className="list-disc list-inside">
+                <li>Stored securely</li>
+                <li>Never sold or shared with third-party marketers</li>
+                <li>Used only within Perspectify’s operations</li>
+              </ul>
+              <h4 className="font-semibold">4. Cookies & Tracking</h4>
+              <p>
+                We may use basic cookies or analytics (e.g., Google Analytics). You may disable cookies in your browser.
+              </p>
+              <h4 className="font-semibold">5. Third-Party Tools</h4>
+              <p>
+                We use third-party services (e.g., Ko-fi, Telegram, Bizichat) – see their policies.
+              </p>
+              <h4 className="font-semibold">6. Opt-Out</h4>
+              <p>
+                Opt out anytime. To delete data, email{' '}
+                <a href="mailto:support@perspectifyai.com" className="underline text-blue-400">
+                  support@perspectifyai.com
+                </a>
+                .
+              </p>
+              <h4 className="font-semibold">7. Changes to Policy</h4>
+              <p>
+                We may revise this policy and notify you via email or platform updates.
+              </p>
+            </div>
+
+            <div className="flex justify-end space-x-4">
+              <button
+                onClick={() => setShowPolicyModal(false)}
+                className="px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handlePolicyAccept}
+                className="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 transition cursor-pointer"
+              >
+                Accept and Continue
+              </button>
+            </div>
+
+            <button
+              onClick={() => setShowPolicyModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-200 cursor-pointer"
+              aria-label="Close modal"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
