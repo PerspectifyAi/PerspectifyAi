@@ -486,6 +486,7 @@ export default function WaitlistPage() {
               className="absolute top-4 right-4 text-gray-400 hover:text-gray-200 cursor-pointer"
               aria-label="Close modal"
             >
+              ✕
             </button>
           </div>
         </div>
