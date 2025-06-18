@@ -35,11 +35,6 @@ const team = [
     image: '/Teams/Rohan.png',
   },
   {
-    name: 'Piyush Oram',
-    role: 'Core Team',
-    image: '/Teams/Piyush.jpg',
-  },
-  {
     name: 'Nithiesh Naik',
     role: 'Core Team',
     image: '/Teams/Nithiesh.jpg',

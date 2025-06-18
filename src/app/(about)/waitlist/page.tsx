@@ -93,11 +93,8 @@ export default function WaitlistPage() {
         },
         EMAILJS_PUBLIC_KEY                             // fourth argument is required
       );
-      console.log('✅ Confirmation email sent');
-    } catch (err) {
-      console.error('❌ Failed to send confirmation email:', err);
-    }
-  };
+    
+
 
   const handleSubmit = async () => {
     setNameError(false);
