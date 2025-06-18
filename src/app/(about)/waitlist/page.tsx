@@ -76,7 +76,7 @@ export default function WaitlistPage() {
   }, [EMAILJS_PUBLIC_KEY]);
 
   // Send a confirmation email using the variable names that your EmailJS template expects.
-  // Here we assume your template uses `user_name`, `user_email`, and `referral_link`
+  // Here we assume your template uses `name`, `email`, and `referral_link`.
   const sendConfirmationEmail = async (
     userName: string,
     userEmail: string,
@@ -87,14 +87,16 @@ export default function WaitlistPage() {
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         {
-          name: userName,                        
-          email: userEmail,                      
-          referral_link: `${window.location.origin}/waitlist?ref=${userReferralId}`, 
+          name: userName,
+          email: userEmail,
+          referral_link: `${window.location.origin}/waitlist?ref=${userReferralId}`,
         },
-        EMAILJS_PUBLIC_KEY                             // fourth argument is required
+        EMAILJS_PUBLIC_KEY
       );
-    
-
+    } catch (error) {
+      console.error('Failed to send confirmation email:', error);
+    }
+  }; // ← Added this closing brace and semicolon
 
   const handleSubmit = async () => {
     setNameError(false);
@@ -484,7 +486,6 @@ export default function WaitlistPage() {
               className="absolute top-4 right-4 text-gray-400 hover:text-gray-200 cursor-pointer"
               aria-label="Close modal"
             >
-              ✕
             </button>
           </div>
         </div>
